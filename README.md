@@ -11,7 +11,7 @@ Repository này chứa mã nguồn để huấn luyện và đánh giá một m�
 
 ## Cài Đặt
 
-Truy cập [Kaggle](https://www.kaggle.com/), tạo 1 notebook và sử dụng Code trong tệp "main.py"
+Truy cập [Kaggle](https://www.kaggle.com/), tạo 1 notebook và sử dụng Code trong tệp "main.py" để huấn luyện model.
 
 ## Tập Dữ Liệu
 
@@ -38,7 +38,7 @@ Sau khi tải về, tập dữ liệu nên có cấu trúc như sau:
 
 ## Sử Dụng Mô Hình Để Dự Đoán
 
-Sau khi huấn luyện, bạn có thể sử dụng mô hình để dự đoán viêm phổi trên các ảnh X-quang ngực mới.
+Sau khi huấn luyện, bạn có thể sử dụng model để dự đoán viêm phổi trên các ảnh X-quang ngực mới.
 
 1. **Tải mô hình đã huấn luyện:**
     ```python
