@@ -1,4 +1,4 @@
-# Phát Hiện Viêm Phổi Sử Dụng CNN với Fine-Tuning VGG16
+# Chẩn đoán Viêm Phổi Sử Dụng CNN với Fine-Tuning VGG16
 
 Repository này chứa mã nguồn để huấn luyện và đánh giá một mô hình Mạng Nơ-ron Tích Chập (CNN) nhằm phát hiện viêm phổi từ ảnh X-quang ngực sử dụng transfer learning với VGG16. Mô hình được huấn luyện và kiểm thử trên một tập dữ liệu ảnh X-quang ngực có sẵn trên Kaggle.
 
