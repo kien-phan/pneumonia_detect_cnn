@@ -55,7 +55,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 
-# Load mô hình đã huấn luyện
+//Load mô hình đã huấn luyện
 model = load_model('CNN_model.h5')
 
 def preprocess_image(image_path):
@@ -95,7 +95,7 @@ def open_file():
 
         result_label.config(text="Kết quả: " + result)
 
-# Tạo giao diện người dùng với Tkinter
+//Tạo giao diện người dùng với Tkinter
 root = tk.Tk()
 root.title("Chẩn đoán viêm phổi từ ảnh X-quang")
 
