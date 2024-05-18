@@ -55,7 +55,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 
-//Load mô hình đã huấn luyện
+
 model = load_model('CNN_model.h5')
 
 def preprocess_image(image_path):
@@ -68,10 +68,8 @@ def preprocess_image(image_path):
 def predict_pneumonia(img_path, model):
     preprocessed_image = preprocess_image(img_path)
 
-    # Predict the class of the image
     prediction = model.predict(preprocessed_image)
 
-    # Convert prediction to class label
     class_label = np.argmax(prediction, axis=1)
 
     if class_label[0] == 0:
@@ -95,7 +93,6 @@ def open_file():
 
         result_label.config(text="Kết quả: " + result)
 
-//Tạo giao diện người dùng với Tkinter
 root = tk.Tk()
 root.title("Chẩn đoán viêm phổi từ ảnh X-quang")
 
