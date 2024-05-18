@@ -11,7 +11,7 @@ Repository này chứa mã nguồn để huấn luyện và đánh giá một m�
 
 ## Cài Đặt
 
-Truy cập [Kaggle](https://www.kaggle.com/), tạo 1 notebook và sử dụng Code trong tệp "main.py" để huấn luyện model.
+Truy cập [Kaggle](https://www.kaggle.com/), tạo 1 notebook và sử dụng Code trong tệp "train.py" để huấn luyện model. Sau khi có được model hoặc sử dụng model đã train sẵn tại [đây](https://drive.google.com/file/d/1uoAc6mANiFJzWtZRhtpqeafGILcTFjPT/view?usp=drive_link) và sử dụng code trong file "detect.py" để chẩn đoán xem 1 ảnh chụp x-quang của 1 người có bị mắc bệnh hay không.
 
 ## Tập Dữ Liệu
 
@@ -48,22 +48,68 @@ Sau khi huấn luyện, bạn có thể sử dụng model để dự đoán viê
 
 2. **Dự đoán trên một ảnh mới:**
     ```python
-    import numpy as np
-    from tensorflow.keras.preprocessing import image
+import tkinter as tk
+from tkinter import filedialog, Label, Frame
+from PIL import Image, ImageTk
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+import numpy as np
 
-    def predict_pneumonia(img_path, model):
-        img = image.load_img(img_path, target_size=(256, 256))
-        img_array = image.img_to_array(img)
-        img_array = np.expand_dims(img_array, axis=0)
-        img_array /= 255.0
+# Load mô hình đã huấn luyện
+model = load_model('CNN_model.h5')
 
-        prediction = model.predict(img_array)
-        if prediction[0] > 0.5:
-            return 'Phát hiện viêm phổi'
-        else:
-            return 'Không phát hiện viêm phổi'
+def preprocess_image(image_path):
+    img = load_img(image_path, target_size=(256, 256))  # Resize image
+    img_array = img_to_array(img)  # Convert to numpy array
+    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    img_array = img_array / 256.0  # Normalize pixel values
+    return img_array
 
-    img_path = 'duong-dan-toi-anh-cua-ban.jpg'
-    result = predict_pneumonia(img_path, model)
-    print(result)
+def predict_pneumonia(img_path, model):
+    preprocessed_image = preprocess_image(img_path)
+
+    # Predict the class of the image
+    prediction = model.predict(preprocessed_image)
+
+    # Convert prediction to class label
+    class_label = np.argmax(prediction, axis=1)
+
+    if class_label[0] == 0:
+        result = 'Không bị mắc bệnh viêm phổi'
+    else:
+        result = 'Bị mắc bệnh viêm phổi'
+
+    return result
+
+
+def open_file():
+    file_path = filedialog.askopenfilename()
+    if file_path:
+        result = predict_pneumonia(file_path, model)
+        img = Image.open(file_path)
+        img = img.resize((256, 256), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+
+        panel.config(image=img)
+        panel.image = img
+
+        result_label.config(text="Kết quả: " + result)
+
+# Tạo giao diện người dùng với Tkinter
+root = tk.Tk()
+root.title("Chẩn đoán viêm phổi từ ảnh X-quang")
+
+frame = Frame(root, padx=10, pady=10)
+frame.pack(padx=10, pady=10)
+
+open_button = tk.Button(frame, text="Chọn ảnh", command=open_file)
+open_button.grid(row=0, column=0, padx=10, pady=10)
+
+result_label = tk.Label(frame, text="Kết quả: ", font=("Helvetica", 14))
+result_label.grid(row=0, column=1, padx=10, pady=10)
+
+panel = Label(frame)
+panel.grid(row=1, column=0, columnspan=2, pady=10)
+
+root.mainloop()
     ```
